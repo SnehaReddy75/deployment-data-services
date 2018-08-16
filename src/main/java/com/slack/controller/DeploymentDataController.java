@@ -42,8 +42,13 @@ public class DeploymentDataController {
 
         List<Event> events = deploymentDataService.getEventsInTimeRange(startTime,endTime);
         if(events != null){
-            log.info("Returning deployment events for the time range {} - {}", startTime, endTime);
-            return ResponseEntity.ok(events);
+            if(events.isEmpty()){
+                log.info("No events found for the time range {} - {}", startTime, endTime);
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            }else{
+                log.info("Returning deployment events for the time range {} - {}", startTime, endTime);
+                return ResponseEntity.ok(events);
+            }
         }else{
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
@@ -55,8 +60,13 @@ public class DeploymentDataController {
         List<Event> events = deploymentDataService.getEventsByEngineer(engineer);
 
         if(events != null){
-            log.info("Returning deployment events performed by engineer: {}", engineer);
-            return ResponseEntity.ok(deploymentDataService.getEventsByEngineer(engineer));
+            if(events.isEmpty()){
+                log.info("No events found for the engineer {}", engineer);
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            }else{
+                log.info("Returning deployment events performed by engineer: {}", engineer);
+                return ResponseEntity.ok(deploymentDataService.getEventsByEngineer(engineer));
+            }
         }else{
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
