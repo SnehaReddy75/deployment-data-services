@@ -1,0 +1,7 @@
+Future implementations
+
+1. Deployed this service to AWS elastic beanstalk. In case of heavy traffic we can use
+   EC2s auto scaling service.
+2. We can implement caching (REDIS cache) for this service.
+3. In case of heavy traffic, we can implement load balancing.
+4.
