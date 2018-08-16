@@ -74,10 +74,9 @@ public class DeploymentDataService {
                 ZonedDateTime utcTime = ZonedDateTime.now(ZoneOffset.UTC);
                 long timeStamp = utcTime.toInstant().toEpochMilli()/1000;
                 long todayMidnight = utcTime.toLocalDate().atStartOfDay().toEpochSecond(ZoneOffset.UTC);
-                eventEntityList =  eventRepository.getEventsInTimeRange(timeStamp,todayMidnight);
+                eventEntityList =  eventRepository.getEventsInTimeRange(todayMidnight,timeStamp);
             }
 
-            //TODO: Parallel stream
             for(EventEntity eventEntity : eventEntityList){
                 ZonedDateTime utcDate = Instant.ofEpochSecond(eventEntity.getDate()).atZone(ZoneOffset.UTC);
                 Event event = new Event(eventEntity.getId(),eventEntity.getEngineer(),eventEntity.getAction(),
