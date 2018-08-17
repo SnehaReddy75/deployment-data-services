@@ -23,13 +23,13 @@ import java.util.Set;
  */
 @Slf4j
 @RestController
-@RequestMapping("/deployment/events")
+@RequestMapping("/deployment")
 public class DeploymentDataController {
 
     @Autowired
     DeploymentDataService deploymentDataService;
 
-    @GetMapping(value = "/")
+    @GetMapping(value = "/events")
     public ResponseEntity getEventsInTimeRange(@QueryParam("startTime") String startTime,
                                                @QueryParam("endTime") String endTime) {
 
@@ -54,7 +54,7 @@ public class DeploymentDataController {
         }
     }
 
-    @GetMapping(value = "/engineer/{engineer}")
+    @GetMapping(value = "/events/engineer/{engineer}")
     public ResponseEntity getEvents(@PathVariable("engineer") String engineer) {
         log.info("Received request to retrieve deployment events performed by engineer: {}", engineer);
         List<Event> events = deploymentDataService.getEventsByEngineer(engineer);
@@ -72,7 +72,7 @@ public class DeploymentDataController {
         }
     }
 
-    @GetMapping(value = "/daily-summary")
+    @GetMapping(value = "/events/daily-summary")
     public ResponseEntity getDailySummary() {
         log.info("Received request to retrieve daily summary of deployment events");
         Summary summary = deploymentDataService.getDailySummary();
@@ -85,7 +85,7 @@ public class DeploymentDataController {
         }
     }
 
-    @GetMapping(value = "/engineers")
+    @GetMapping(value = "/events/engineers")
     public ResponseEntity getEngineers() {
         log.info("Received request to retrieve list of engineers");
         Set<String> engineers = deploymentDataService.getEngineersList();
